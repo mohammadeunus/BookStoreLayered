@@ -30,7 +30,7 @@ public class BookStoreMenuContributor : IMenuContributor
                 l["Menu:Home"],
                 "~/",
                 icon: "fas fa-home",
-                order: 0
+                order: 1
             )
         );
 
@@ -38,7 +38,8 @@ public class BookStoreMenuContributor : IMenuContributor
             new ApplicationMenuItem(
                 "BooksStore",
                 l["Menu:BookStore"],
-                icon: "fa fa-book"
+                icon: "fa fa-book",
+                order: 0
             ).AddItem(
                 new ApplicationMenuItem(
                     "BooksStore.Books",
