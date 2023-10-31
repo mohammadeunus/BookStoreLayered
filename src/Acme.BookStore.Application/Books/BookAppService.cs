@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Acme.BookStore.Permissions;
+using System;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -17,6 +18,11 @@ public class BookAppService :
     public BookAppService(IRepository<Book, Guid> repository)
         : base(repository)
     {
-
+        // the CrudAppService provides shortcuts 2 set permission on each of its methods.
+        GetPolicyName = BookStorePermissions.Books.Default; // if we goto defination: we see this is permission for GetAsync() method.
+        GetListPolicyName = BookStorePermissions.Books.Default; // permission for GetListAsync() method.
+        CreatePolicyName = BookStorePermissions.Books.Create;
+        UpdatePolicyName = BookStorePermissions.Books.Edit;
+        DeletePolicyName = BookStorePermissions.Books.Delete;
     }
 }
