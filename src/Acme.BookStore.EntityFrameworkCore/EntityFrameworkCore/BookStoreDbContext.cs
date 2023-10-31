@@ -105,6 +105,20 @@ public class BookStoreDbContext :
 
             b.HasIndex(x => x.Name);
         });
+         
+        builder.Entity<Book>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "Books", BookStoreConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+
+            // Define a one-to-many relationship between the current entity (represented by 'b')
+            // and the 'Author' entity, where each 'Author' can have multiple of the current entity.
+            // Set 'AuthorId' as the foreign key to establish the relationship.
+            // Mark the foreign key as required, meaning each record in the current entity must be
+            // associated with an 'Author'.
+            b.HasOne<Author>().WithMany().HasForeignKey(x => x.AuthorId).IsRequired();
+        });
 
     }
 }
