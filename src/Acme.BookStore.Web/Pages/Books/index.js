@@ -48,6 +48,10 @@
                     data: "name"
                 },
                 {
+                    title: l('Author'),
+                    data: "authorName"
+                },
+                {
                     title: l('Type'),
                     data: "type",
                     render: function (data) {
