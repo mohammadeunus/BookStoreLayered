@@ -1,4 +1,5 @@
-﻿using Acme.BookStore.Books;
+﻿using Acme.BookStore.Authors;
+using Acme.BookStore.Books;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -63,6 +64,8 @@ public class BookStoreDbContext :
 
     /* Add DbSets here. */
     public DbSet<Book> Books { get; set; }
+    public DbSet<Author> Authors { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -89,11 +92,19 @@ public class BookStoreDbContext :
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
         });
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(BookStoreConsts.DbTablePrefix + "YourEntities", BookStoreConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<Author>(b =>
+        {
+            b.ToTable(BookStoreConsts.DbTablePrefix + "Authors",
+                BookStoreConsts.DbSchema);
+
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(AuthorConsts.MaxNameLength);
+
+            b.HasIndex(x => x.Name);
+        });
+
     }
 }
