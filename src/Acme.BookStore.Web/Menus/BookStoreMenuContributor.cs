@@ -25,30 +25,31 @@ public class BookStoreMenuContributor : IMenuContributor
         var administration = context.Menu.GetAdministration();
         var l = context.GetLocalizer<BookStoreResource>();
 
-        context.Menu.Items.Insert(
-            0,
-            new ApplicationMenuItem(
-                BookStoreMenus.Home,
-                l["Menu:Home"],
-                "~/",
-                icon: "fas fa-home",
-                order: 0
-            )
-        );
-
-        context.Menu.AddItem(
+        context.Menu
+            .AddItem(
             new ApplicationMenuItem(
                 "BooksStore",
                 l["Menu:BookStore"],
-                icon: "fa fa-book" 
-            ).AddItem(
+                icon: "fa fa-book",
+                order: 0
+            )
+            .AddItem(
                 new ApplicationMenuItem(
                     "BooksStore.Books",
                     l["Menu:Books"],
                     url: "/Books"
-                ).RequirePermissions(BookStorePermissions.Books.Default) // Check the permission!
+                ).RequirePermissions(BookStorePermissions.Books.Default)
+            )
+            .AddItem( 
+                // ADDED THE NEW "AUTHORS" MENU ITEM UNDER THE "BOOK STORE" MENU
+                new ApplicationMenuItem(
+                    "BooksStore.Authors",
+                    l["Menu:Authors"],
+                    url: "/Authors"
+                ).RequirePermissions(BookStorePermissions.Authors.Default)
             )
         );
+
 
 
 
